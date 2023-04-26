@@ -1,0 +1,74 @@
+import csv
+
+
+class Stoke:
+    def __init__(self, name_detail, sale_detail, count_detail):
+        self.name_detail = name_detail
+        self.sale_detail = sale_detail
+        self.count_detail = count_detail
+
+
+stoke = Stoke('priora', '23', '32')
+
+'''class Factory:
+    def add_item(self, item):
+        name_item = item.name_detail
+        sale_item = item.sale_detail
+        count_item = item.count_detail
+        with open('bd.csv', "w", encoding="utf-8") as csvfile:
+            writer = csv.writer(csvfile, delimiter=';', quotechar=' " ', quoting=csv.QUOTE_MINIMAL)
+            writer.writerow([name_item, sale_item, count_item])
+прарабы хуесосы не платят блять
+работаю за еду(пиво)
+спасите нахуй
+плз
+
+    def remove_item(self, item):
+        name_item = item.name_detail
+        sale_item = item.sale_detail
+        count_item = item.count_detail
+        with open('bd.csv', encoding="utf-8") as csvfile:
+            print()
+            reader = csv.reader(csvfile, delimiter=';', quotechar='"')
+            print(reader)
+            for index, row in enumerate(reader):
+                if index != 0:
+                    if row[0] == name_item and row[1] == sale_item and row[2] == count_item:
+                        print(1)'''
+
+
+class Factory(Stoke):
+    def __init__(self):
+        super().__init__(name_detail=None, sale_detail=None, count_detail=None)
+
+    def add_item(self, item):
+        name_item = item.name_detail
+        sale_item = item.sale_detail
+        count_item = item.count_detail
+        with open('bd.csv', "a", encoding="utf-8", newline='') as csvfile:
+            writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            print([name_item, sale_item, count_item])
+            writer.writerow([name_item, sale_item, count_item])
+            csvfile.close()
+
+    def remove_item(self, name):
+        with open('import.csv', newline='') as source:
+            reader = csv.DictReader(source)
+            with open('bd.csv', "a", encoding="utf-8", newline='') as csvfile:
+                writer = csv.writer(csvfile, delimiter=';', quotechar='"', fieldnames=reader.fieldnames,
+                                    quoting=csv.QUOTE_MINIMAL, dialect=csv.unix_dialect)
+                writer.writeheader()
+                csvfile.close()
+
+    def get_item(self, name):
+        with open('bd.csv', 'r', encoding="utf-8") as csvfile:
+            reader = csv.reader(csvfile, delimiter=';', quotechar='"')
+            #print(enumerate(reader))
+            #print(reader)
+            for index, row in enumerate(reader):
+                if row[0] == name:
+                    return f'цена: {row[1]} членов в очко Игоря, кол-во деталей: {row[2]} штук'
+
+
+#print(Factory.get_item(12, 'priora'))
+print(Factory.add_item(1, stoke))
