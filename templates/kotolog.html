@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block content %}
+{%for kot in koti%}
+<style>
+   .colorred {
+   font-size: 80px;
+   color: red;
+   }
+  </style>
+<div class="container">
+    <img src={{kot}} width="200" height="200" />
+    <span class="colorred">кот!</span>
+</div>
+{%endfor%}
+{%endblock%}

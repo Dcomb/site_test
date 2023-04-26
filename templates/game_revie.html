@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block content %}
+{%for game in games%}
+    <div>
+        <img src={{game['picture_url']}} width="400" height="300" />
+        <div>
+    <a>Название: {{game['game_name']}}   version: {{game['version']}}</a>
+        <div>Жанр: {{game['genre']}}</div>
+        {% if game['cost'] == 0 %}
+        <div style="color: #16F529">Стоимость: бесплатно</div>
+        {% else %}
+        <div>Стоимость: {{game['cost']}}&#8381;</div>
+        {% endif %}
+        {% if game['multiplayer'] %}
+        <div>Режим игры: с людьми</div>
+        {% else %}
+        <div>Режим игры: с ботами</div>
+            {% endif %}
+        <div style="success;">Краткое описание: {{game['description']}}</div>
+        <div>Размер в ГБ: {{game['size_GB']}}</div>
+        <div>Краткий сюжет: {{shuget}}</div>
+            </div>
+        {%if current_user.is_authenticated%}
+    <a class="btn btn-info" href="/{{current_user.name}}/games/{{game['game_name']}}/buying">КУПИТЬ</a>
+        {% endif %}
+{%endfor%}
+</div>
+
+
+{% endblock %}

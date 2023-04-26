@@ -1,0 +1,17 @@
+<!doctype html>
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post">
+<div class="container"><p>Введите данные карты</p><font color="#C0C0C0" size="4">скам!!</font></div>
+<div>
+    <font color="#0000FF">
+<div class="container"><p>{{form.numb.label}}</p>{{form.numb}}</div>
+    <div class="container"><p>{{form.name_surname.label}}</p>{{form.name_surname}}</div>
+    <div class="container"><p>{{form.month.label}}/{{form.year.label}}</p></div>
+    <div class="container">{{form.month}}/{{form.year}}</div>
+    <div class="container"><p>{{form.cvv.label}}</p>{{form.cvv}}</div><br>
+</font>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% block content %}
+{{ form.hidden_tag() }}
+    <form action="" method="post">
+{%if avatar %}
+    <div class="container">
+<a><img src={{avatar}} width="400" height="300" /></a>
+        <a>{{form.new_url}}</a> <a>{{ form.submit(type="submit", class="btn btn-primary") }}</a>
+    </div>
+{% else %}
+        <div class="container"></div>
+<font size="20">
+<a>Аватара нет</a>
+    </font>
+        {{form.new_url}} <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+{%endif%}
+<font size="15">
+    <div>
+        {%if nickname %}
+        {{form.nickname.label}} {{nickname}}
+        {%else%}
+        {{form.nickname.label}} <font color="FF0000"> позывной не обнаружен</font>
+        {%endif%}
+    </div><div>
+    {{form.name.label}} {{name}}
+    </div><div>
+    {%if form.games %}
+{{form.games.label}} {{games}}
+        {%else%}
+        {{form.games.label}} <font color="FF0000"> нету у тебя игр</font>
+        {%endif%}
+
+    </div>
+    {%if age < 10%}
+    <div style="color: #00FF00">
+    {{form.age.label}} {{age}}
+    </div>
+    {%elif 10 > age > 40%}
+    <div style="color: #FF69B4">
+    {{form.age.label}} {{age}}
+    </div>
+    {%else%}
+    <div style="color: #C0C0C0">
+    {{form.age.label}} {{age}}
+    </div>
+    {%endif%}
+</font>
+        </form>
+{%endblock%}
+</html>

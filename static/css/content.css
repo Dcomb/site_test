@@ -1,0 +1,31 @@
+.container{
+
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: flex-start;
+
+    border: 5px solid black;
+
+    padding: 20px;
+}
+
+.cont {
+  font-family: arial;
+  font-size: 24px;
+  margin: 25px;
+  width: 350px;
+  height: 200px;
+  outline: dashed 1px black;
+}
+
+.buying{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 450px;
+    background-color: #ffcc00;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+}

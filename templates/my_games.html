@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block content %}
+<br>
+Ваши игры:
+<br>
+<br>
+{%if games %}
+<font color="#0000FF">
+{%for game in games%}
+<div class="container">
+        <img src={{game['picture_url']}} width="100" height="100" />
+            <a>{{game['game_name']}} </a>
+    <br>
+</div>
+{%endfor%}
+</font>
+{% else %}
+<font color="#FF0000">
+<a>У ВАС НЕТ КУПЛЕННЫХ ИГР </a>
+</font>
+{% endif %}
+{%endblock%}
