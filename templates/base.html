@@ -16,6 +16,9 @@
         <a class="btn btn-success" href="/logout">Выйти</a>
         <a class='btn btn-info' href="/">Вернуться на главную страницу</a>
         <a class="navbar-brand" href="/user/{{current_user.name}}">Пользователь: {{ current_user.name }}</a>
+        {%if current_user.avatar%}
+        <img src={{current_user.avatar}} width="70" height="70" />
+        {%endif%}
 {% else %}
     <p>
         <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
@@ -38,6 +41,20 @@
         {%endif%}
 </div>
     {% block content %}{% endblock %}
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+      <span class="mb-3 mb-md-0 text-body-secondary">© 2023 Company, Inc</span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+      <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+      <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+    </ul>
+  </footer>
 </main>
 </body>
 </html>

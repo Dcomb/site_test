@@ -6,20 +6,19 @@ from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 
-
-class Workers(SqlAlchemyBase, UserMixin, SerializerMixin):
+class Workers(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'workers'
 
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-    worker_surname = sqlalchemy.Column(sqlalchemy.String, sqlalchemy.ForeignKey("users.id"))
-    worker_name = sqlalchemy.Column(sqlalchemy.String, sqlalchemy.ForeignKey("users.id"))
-    worker_age = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
+    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
+    worker_surname = sqlalchemy.Column(sqlalchemy.String)
+    worker_name = sqlalchemy.Column(sqlalchemy.String)
+    worker_age = sqlalchemy.Column(sqlalchemy.Integer)
     company_name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     registr_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
-    user_name = orm.relationship('User', foreign_keys=[worker_name])
-    user_surname = orm.relationship('User', foreign_keys=[worker_surname])
-    user_age = orm.relationship('User', foreign_keys=[worker_age])
+    orm_user = orm.relationship('User')
+
 
 
 

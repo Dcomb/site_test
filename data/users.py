@@ -6,7 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
-from .workers import Workers
 
 
 
@@ -25,7 +24,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                       default=datetime.datetime.now)
     avatar = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    #workers = orm.relationship('Workers', backref='users')
+    workers = orm.relationship('Workers', back_populates='orm_user')
 
     def __repr__(self):
         return {'name': self.name, 'age': self.age, 'nickname': self.nickname, 'avatar': self.avatar}

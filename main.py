@@ -15,7 +15,7 @@ from forms.game import GameForm
 from forms.game_create import DownloadForm
 from data.games import Games
 from data import games_api
-from web.forms.user import UserForm
+from forms.user import UserForm
 import os
 
 app = Flask(__name__)
@@ -23,6 +23,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=365
 )
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbdir/test.db'
 app.register_blueprint(games_api.blueprint)
 UPLOAD_FOLDER = '/files'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -54,6 +55,7 @@ def reqister():
                                    form=form,
                                    message="Пароли не совпадают")
         db_sess = db_session.create_session()
+
         print(form.email.data)
         if db_sess.query(User).filter(User.email == form.email.data).first() and \
             db_sess.query(User).filter(User.nickname == form.nickname.data).first():
@@ -70,13 +72,17 @@ def reqister():
                 position=form.position.data,
                 hashed_password=form.password.data,
                 nickname=form.nickname.data)
+            db_sess.add(user)
             db_sess.commit()
             db_sess = db_session.create_session()
-            worker = Workers(
-                company_name=form.nickname.data
+            worker = Workers(orm_user=user,
+                             company_name=form.nickname.data,
+                             worker_name=form.name.data,
+                             worker_surname=form.surname.data,
+                             worker_age=form.age.data
             )
             user.set_password(form.password.data)
-            db_sess.add(user)
+
             db_sess.add(worker)
             db_sess.commit()
             login_user(user)
@@ -174,13 +180,17 @@ def user_profile(user_name):
     print(form)
     db_sess = db_session.create_session()
     users = db_sess.query(User).filter(User.name == user_name).first()
-    user = users.to_dict()
-    name = user['name']
-    nickname = user['nickname']
-    avatar = user['avatar']
-    games = user['games']
-    age = user['age']
-    position = user['position']
+    print('ggg')
+    print(users.name)
+    user = users
+    print(1)
+    name = user.name
+    nickname = user.nickname
+    avatar = user.avatar
+    games = user.games
+    age = user.age
+    position = user.position
+    print(2)
     print(games, 123)
     if not games:
         games = 'Нету у тебя игр'
@@ -193,6 +203,7 @@ def get_games():
     form = GameForm()
     db_sess = db_session.create_session()
     games = db_sess.query(Games).all()
+    print(games)
     print(form.game_name, form.validate_on_submit())
     if form.submit():
         print(form.validate_on_submit())
@@ -209,9 +220,9 @@ def get_games():
 def my_games(user_name):
     db_sess = db_session.create_session()
     users = db_sess.query(User).filter(User.name == user_name).first()
-    user = users.to_dict()
-    if user['games']:
-        games = user['games'].split()
+    user = users
+    if users.games:
+        games = users.games.split()
     else:
         games = []
     games1 = []
@@ -245,7 +256,10 @@ def buy_game(user_name, game_name):
         print(form.cvv.data, form.month.data, form.year.data, form.numb.data)
         if form.cvv.data and form.month.data and form.year.data and form.numb.data:
             user = db_sess.query(User).filter(User.name == user_name).first()
-            user.games = user.games + f' {game_name}'
+            if user.games:
+                user.games = user.games + f' {game_name}'
+            else:
+                user.games = game_name
             db_sess.commit()
             return redirect('/')
 
